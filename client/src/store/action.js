@@ -1,13 +1,13 @@
 import {
-  LIST_GAME,
-  ADD_GAME,
-  ADD_WISHLIST,
+  LIST_POKEMON,
+  DETAIL_POKEMON,
   IS_ERROR,
   IS_LOADING,
-  DETAIL_GAME,
+  ADD_WISHLIST,
 } from "./actionType";
-export function fetchGames(url) {
+export function fetchPokemon() {
   return async function (dispatch, getState) {
+    let url = "http://localhost:3000/pokemon";
     try {
       dispatch(setLoading(true));
       fetch(url, {
@@ -15,7 +15,7 @@ export function fetchGames(url) {
       })
         .then((response) => response.json())
         .then((data) => {
-          dispatch(listGames(data));
+          dispatch(listPokemon(data));
         })
         .catch((err) => {
           dispatch(setError(err));
@@ -29,11 +29,11 @@ export function fetchGames(url) {
   };
 }
 
-export function listGames(data) {
+export function listPokemon(data) {
   return async function (dispatch, getState) {
     try {
       dispatch({
-        type: LIST_GAME,
+        type: LIST_POKEMON,
         payload: data,
       });
     } catch (err) {
@@ -68,19 +68,6 @@ export function setError(payload) {
   };
 }
 
-// export function addWishlist(data) {
-//     return async function (dispatch,getState) {
-//         try{
-//             dispatch({
-//                 type:ADD_WISHLIST,
-//                 payload:data
-//             })
-//         } catch(err){
-//             console.log(err);
-//         }
-//     }
-// }
-
 export function fetchDetail(url) {
   return async function (dispatch, getState) {
     try {
@@ -90,7 +77,7 @@ export function fetchDetail(url) {
       })
         .then((response) => response.json())
         .then((data) => {
-          dispatch(detailGame(data));
+          dispatch(detailPokemon(data));
         })
         .catch((err) => {
           dispatch(setError(err));
@@ -104,58 +91,11 @@ export function fetchDetail(url) {
   };
 }
 
-export function detailGame(data) {
+export function detailPokemon(data) {
   return async function (dispatch, getState) {
     try {
       dispatch({
-        type: DETAIL_GAME,
-        payload: data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
-
-export function addGame(name, description, price, cover, link) {
-  return async function (dispatch, getState) {
-    try {
-      dispatch(setLoading(true));
-      fetch("http://localhost:3000/games", {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          name,
-          description,
-          cover,
-          price,
-          steamLink: link,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          dispatch(newGame(data));
-        })
-        .catch((err) => {
-          dispatch(setError(err));
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } catch (error) {
-      dispatch(setError(error));
-    }
-  };
-}
-
-export function newGame(data) {
-  return async function (dispatch, getState) {
-    try {
-      dispatch({
-        type: ADD_GAME,
+        type: DETAIL_POKEMON,
         payload: data,
       });
     } catch (err) {

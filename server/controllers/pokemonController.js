@@ -20,6 +20,8 @@ class PokemonController {
           return el.type;
         });
         data.results[index].types = types;
+        let image = detail.data.sprites.front_default;
+        data.results[index].image = image;
       }
       res.status(200).json(data);
     } catch (error) {
