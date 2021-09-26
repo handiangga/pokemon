@@ -20,8 +20,9 @@ export default function PokemonCard(props) {
     }
   }
 
-  function onDetail(id) {
-    history.push(`/pokemon/${id}`);
+  function onDetail(url) {
+    let id = url.split("/");
+    history.push(`/pokemon/${id[6]}`);
   }
 
   return (
@@ -29,12 +30,12 @@ export default function PokemonCard(props) {
       <div class="xl:w-1/4 md:w-1/2 p-4">
         <div class="bg-gray-100 p-6 rounded-lg">
           <img
-            onClick={() => onDetail()}
+            onClick={() => onDetail(props.pokemon.url)}
             class="h-40 rounded w-full object-cover object-center mb-6"
             src={props.pokemon.image}
             alt="content"
           />
-          <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">
+          <h3 class="tracking-widest text-indigo-500 text-xs font-large title-font">
             {props.pokemon.name}
           </h3>
           {props.pokemon.types.map((e) => {
